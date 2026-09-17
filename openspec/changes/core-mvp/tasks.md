@@ -24,10 +24,10 @@ Chain strategy: pending
 
 ## Phase 1: Foundation
 
-- [ ] 1.1 Scaffold Next.js, TS, Tailwind; pin versions.
-- [ ] 1.2 Vitest + temp-SQLite harness: `vitest.config.ts`, `tests/setup.ts`.
-- [ ] 1.3 `prisma/schema.prisma`: 9 models, `version`, `archivedAt` on Board/Project; migration + `db.ts`.
-- [ ] 1.4 Schema tests: backlog `list_id NULL`, label uniqueness.
+- [x] 1.1 Scaffold Next.js, TS, Tailwind; pin versions.
+- [x] 1.2 Vitest + temp-SQLite harness: `vitest.config.ts`, `tests/setup.ts`.
+- [x] 1.3 `prisma/schema.prisma`: 9 models, `version`, `archivedAt` on Board/Project; migration + `db.ts`.
+- [x] 1.4 Schema tests: backlog `list_id NULL`, label uniqueness.
 
 ## Phase 2: Concurrency Core
 
