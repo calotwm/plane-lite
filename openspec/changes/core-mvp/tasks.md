@@ -38,10 +38,10 @@ Chain strategy: pending
 
 ## Phase 3: Authentication
 
-- [ ] 3.1 `src/auth/provider.ts`: `AuthProvider` + `SessionUser` seam.
-- [ ] 3.2 `src/auth/password.ts`: Argon2id, admin provisioning, rate-limit.
-- [ ] 3.3 `src/auth/session.ts`: httpOnly cookie issue/validate/invalidate; auth routes, no signup.
-- [ ] 3.4 Tests: valid/invalid/inactive login, 429, 401, logout, provider parity.
+- [x] 3.1 `src/auth/provider.ts`: `AuthProvider` + `SessionUser` seam.
+- [x] 3.2 `src/auth/password.ts`: Argon2id, admin provisioning, rate-limit.
+- [x] 3.3 `src/auth/session.ts`: httpOnly cookie issue/validate/invalidate; auth routes, no signup.
+- [x] 3.4 Tests: valid/invalid/inactive login, 429, 401, logout, provider parity.
 
 ## Phase 4: API
 
