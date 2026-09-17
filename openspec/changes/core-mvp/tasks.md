@@ -31,10 +31,10 @@ Chain strategy: pending
 
 ## Phase 2: Concurrency Core
 
-- [ ] 2.1 `src/lib/errors.ts`: `ConflictCode`, `ConflictBody`, `conflict()` + tests.
-- [ ] 2.2 `src/lib/version.ts`: conditional update returning stale state + tests.
-- [ ] 2.3 `src/lib/reorder.ts`: midpoint key, rebalance, drag-storm test.
-- [ ] 2.4 `src/lib/archive.ts`: `assertWritable` + tests; runs before version check.
+- [x] 2.1 `src/lib/errors.ts`: `ConflictCode`, `ConflictBody`, `conflict()` + tests.
+- [x] 2.2 `src/lib/version.ts`: conditional update returning stale state + tests.
+- [x] 2.3 `src/lib/reorder.ts`: midpoint key, rebalance, drag-storm test.
+- [x] 2.4 `src/lib/archive.ts`: `assertWritable` + tests; runs before version check.
 
 ## Phase 3: Authentication
 
