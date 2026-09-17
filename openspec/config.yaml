@@ -1,0 +1,48 @@
+# openspec/config.yaml
+schema: spec-driven
+
+context: |
+  Greenfield internal company PMO tool: deliberately simplified mix of Plane
+  (open-source Jira alternative) and Trello (kanban).
+  No tech stack yet - to be decided in explore/propose/design. Do NOT assume one.
+  MVP scope (confirmed, do not expand): projects -> boards -> lists -> cards with
+  drag & drop; card fields (priority, assignee, labels, due date); cycles/sprints,
+  backlog, grouping by team.
+  Background: earlier change "plane-internal-pmo" planned to fork upstream
+  makeplane/plane; abandoned in favour of building this own app. Reference:
+  C:\Users\cseifar\Desktop\Proyectos\SDD proyectos\plane-internal-pmo\init.md.
+  Open decisions: stack, data model, auth, multiuser, hosting.
+
+projects: []
+
+testing:
+  strict_tdd: false
+  note: >
+    Zero in-scope projects discovered (empty repo, no stack markers) and no
+    workspace-level test command exists. strict_tdd fails closed to false until
+    explore/propose/design select a stack and an explicit workspace-wide test
+    command covers every in-scope project; re-evaluate then.
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+  specs:
+    - Use Given/When/Then for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+  design:
+    - Include sequence diagrams for complex flows
+    - Document architecture decisions with rationale
+  tasks:
+    - Group by phase, use hierarchical numbering
+    - Keep tasks completable in one session
+  apply:
+    guidelines:
+      - Follow existing code patterns
+    tdd: false
+    test_command: ""
+  verify:
+    test_command: ""
+    build_command: ""
+    coverage_threshold: 0
+  archive:
+    - Warn before merging destructive deltas
