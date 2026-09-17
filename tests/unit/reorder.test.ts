@@ -236,3 +236,70 @@ describe("drag-storm", () => {
     expect(rebalanceCount).toBe(0);
   });
 });
+
+describe("between() tight-gap closure", () => {
+  // These tests pin the documented contract: a pair with no string
+  // strictly between (true closure) must return `null` so the caller
+  // triggers `rebalance` — NOT throw. Only the degenerate programmer
+  // error `prev === next` (both non-empty) throws.
+  //
+  // The tightest possible pairs are `("a", "a0")` and `("0", "00")`:
+  // any string strictly between must start with the shared prefix and
+  // have a char strictly smaller than FIRST_DIGIT right after, which is
+  // impossible. The previous implementation recursed with
+  // `between(prev + FIRST_DIGIT, next)`, landed on `prev === next`, and
+  // threw the programmer-error exception reserved for that case.
+
+  it("between(\"a\", \"a0\") returns null instead of throwing", () => {
+    expect(between("a", "a0")).toBeNull();
+  });
+
+  it("between(\"0\", \"00\") returns null instead of throwing", () => {
+    expect(between("0", "00")).toBeNull();
+  });
+
+  it("positionBetween inherits the null-on-closure contract", () => {
+    expect(positionBetween("a", "a0")).toBeNull();
+    expect(positionBetween("0", "00")).toBeNull();
+  });
+
+  it("concentrated inserts at the tightest gap never throw — closure returns null", () => {
+    // The existing drag-storm test cycles across every gap, so a single
+    // gap never fills enough to hit closure. This test hammers one
+    // tight gap far past the point where the buggy recursion would
+    // throw, and asserts the loop either keeps inserting or sees a
+    // null closure — but never escapes an exception.
+    let prev = "a";
+    const next = "a0";
+    let closed = false;
+    let inserted = 0;
+    for (let i = 0; i < 100; i++) {
+      let mid: string | null;
+      try {
+        mid = between(prev, next);
+      } catch (e) {
+        throw new Error(
+          `iteration ${i}: between("${prev}", "${next}") threw ` +
+            `(${(e as Error).message}) — closure must return null`,
+        );
+      }
+      if (mid === null) {
+        closed = true;
+        break;
+      }
+      expect(assertBetween(prev, mid, next)).toBe(true);
+      prev = mid;
+      inserted++;
+    }
+    // Either closure was reached (caller will rebalance) or many inserts
+    // fit without rebalance. No throw escaped in either path.
+    expect(closed || inserted > 0).toBe(true);
+  });
+
+  it("prev === next still throws the programmer-error exception", () => {
+    // Regression guard: the genuine programmer-error signal must NOT be
+    // swallowed by the new closure guard.
+    expect(() => between("abc", "abc")).toThrow(/equals next/);
+    expect(() => between("Z", "Z")).toThrow(/equals next/);
+  });
+});

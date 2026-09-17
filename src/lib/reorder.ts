@@ -15,6 +15,12 @@
 // `between` returns `null` and the caller invokes `rebalance` to rewrite
 // the list with evenly-spaced keys (one rebalance, then many more
 // inserts fit before another is needed).
+//
+// Capacity: `rebalance` produces single-digit keys only (max 60
+// positions — the FIRST_DIGIT and LAST_DIGIT slots are reserved as
+// boundaries). Lists that grow beyond that size must extend the
+// algorithm to multi-digit keys before they reach production; callers
+// should not see a rebalance count > 60 on a single list.
 
 // 0-9, A-Z, a-z — 62 ASCII digits, ascending lexicographically.
 export const ALPHABET =
@@ -31,6 +37,9 @@ const LAST_DIGIT = ALPHABET[ALPHABET.length - 1]; // "z"
 // Throws only on a degenerate call where `prev === next` (both
 // non-empty) — a programmer error. A pair where `prev > next` returns
 // `null` so the caller can treat it as "no room", same as a closure.
+// `positionBetween` is a thin wrapper that maps `null`/`undefined`
+// neighbours to "" and inherits this whole contract — including the
+// null-on-closure return for callers that pass card rows directly.
 export function between(prev: string, next: string): string | null {
   // Sentinel "" means no bound on that side. Handle first so the
   // `prev > next` guard below never trips on an open-ended pair.
@@ -70,6 +79,13 @@ export function between(prev: string, next: string): string | null {
   if (aRest === "") {
     const idx = ALPHABET.indexOf(bRest[0]);
     if (idx <= 0) {
+      // Extending `prev` by FIRST_DIGIT can already reach a true
+      // closure (e.g. between("a", "a0") would recurse into
+      // between("a0", "a0")). Detect it here and return `null` so the
+      // caller rebalances; without this guard the recursion lands on
+      // `prev === next` and trips the programmer-error throw reserved
+      // for that case.
+      if (prev + FIRST_DIGIT >= next) return null;
       return between(prev + FIRST_DIGIT, next);
     }
     return prev + ALPHABET.slice(0, idx).slice(-1);
