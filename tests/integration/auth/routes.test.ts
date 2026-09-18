@@ -1,10 +1,8 @@
 import { describe, expect, it, beforeEach, afterAll } from "vitest";
 import { db } from "@/../tests/db";
 import { provisionUser } from "@/auth/password";
-import {
-  POST as login,
-  __resetRateLimitForTesting,
-} from "@/app/api/auth/login/route";
+import { POST as login } from "@/app/api/auth/login/route";
+import { __resetRateLimitForTesting } from "@/auth/loginRateLimiter";
 import { POST as logout } from "@/app/api/auth/logout/route";
 import { GET as me } from "@/app/api/auth/me/route";
 import {

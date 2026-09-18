@@ -14,10 +14,8 @@
 
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import {
-  createPasswordAuthProvider,
-  LoginRateLimiter,
-} from "@/auth/password";
+import { createPasswordAuthProvider } from "@/auth/password";
+import { rateLimiter } from "@/auth/loginRateLimiter";
 import {
   appendSessionCookie,
   prismaSessionStore,
@@ -29,18 +27,10 @@ export const dynamic = "force-dynamic";
 // One provider per worker — the rate limiter is in-memory and shared
 // across requests. Hot reload in dev re-creates the module so the
 // counter resets, which is acceptable for the MVP single-process model.
-const rateLimiter = new LoginRateLimiter();
 const authProvider = createPasswordAuthProvider({
   db,
   rateLimit: rateLimiter,
 });
-
-// Test-only: vitest shares modules across files in the same run, so the
-// in-memory rate-limit counter survives between `describe` blocks unless
-// explicitly reset. Production code MUST NOT call this.
-export function __resetRateLimitForTesting(): void {
-  rateLimiter.reset();
-}
 
 interface LoginRequestBody {
   email: unknown;
