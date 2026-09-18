@@ -33,6 +33,11 @@ yarn-error.log*
 # next.js generated types
 next-env.d.ts
 
+# locally installed AI agent skills (design tooling, not app source)
+.agents/
+.claude/
+skills-lock.json
+
 # editor / os
 .DS_Store
 Thumbs.db
