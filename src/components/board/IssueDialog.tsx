@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/Button";
 import { Dialog } from "@/components/ui/Dialog";
 import { Field, Input, Select, Textarea } from "@/components/ui/Field";
 import { api, ApiError } from "@/lib/apiClient";
+import { ChecklistSection } from "./ChecklistSection";
+import { CommentsSection } from "./CommentsSection";
 import type { CardT, MemberOption } from "./types";
 
 interface IssueDialogProps {
@@ -16,6 +18,8 @@ interface IssueDialogProps {
   listId: string | null;
   members: MemberOption[];
   card: CardT | null;
+  currentUserId: string;
+  isAdmin: boolean;
   onSaved: (card: CardT) => void;
   onDeleted: (cardId: string) => void;
 }
@@ -27,6 +31,8 @@ export function IssueDialog({
   listId,
   members,
   card,
+  currentUserId,
+  isAdmin,
   onSaved,
   onDeleted,
 }: IssueDialogProps) {
@@ -94,7 +100,7 @@ export function IssueDialog({
   }
 
   return (
-    <Dialog open={open} onClose={onClose} title={card ? "Edit card" : "New card"}>
+    <Dialog open={open} onClose={onClose} title={card ? "Edit card" : "New card"} wide={Boolean(card)}>
       <form onSubmit={onSubmit} className="flex flex-col gap-4">
         <Field label="Title" htmlFor="card-title">
           <Input id="card-title" required value={title} onChange={(e) => setTitle(e.target.value)} />
@@ -166,6 +172,13 @@ export function IssueDialog({
           </div>
         </div>
       </form>
+
+      {card && (
+        <div className="mt-5 flex flex-col gap-5 border-t border-border pt-4">
+          <ChecklistSection cardId={card.id} />
+          <CommentsSection cardId={card.id} currentUserId={currentUserId} isAdmin={isAdmin} />
+        </div>
+      )}
     </Dialog>
   );
 }

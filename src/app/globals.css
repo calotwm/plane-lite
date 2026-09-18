@@ -2,44 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Locked dark theme — black surface, one orange accent (craft-floor's
+   "Page Theme Lock": the page has ONE theme, no light/dark split). */
 :root {
-  --surface: #fafafa;
-  --surface-raised: #ffffff;
-  --surface-sunken: #f1f1f2;
-  --border: #e4e4e7;
-  --border-strong: #d4d4d8;
-  --ink: #18181b;
-  --ink-muted: #52525b;
-  --ink-faint: #a1a1aa;
-  --accent: #059669;
-  --accent-hover: #047857;
-  --accent-fg: #ffffff;
-  --danger: #e11d48;
-  --danger-fg: #ffffff;
-  --priority-low: #71717a;
-  --priority-medium: #d97706;
-  --priority-high: #e11d48;
+  --surface: #0a0a0a;
+  --surface-raised: #161616;
+  --surface-sunken: #101010;
+  --border: #272727;
+  --border-strong: #3f3f3f;
+  --ink: #fafafa;
+  --ink-muted: #a3a3a3;
+  --ink-faint: #6b6b6b;
+  --accent: #f97316;
+  --accent-hover: #fb923c;
+  --accent-fg: #1a0f04;
+  --danger: #fb7185;
+  --danger-fg: #200608;
+  --priority-low: #8a8a8a;
+  --priority-medium: #eab308;
+  --priority-high: #fb7185;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --surface: #0a0a0b;
-    --surface-raised: #18181b;
-    --surface-sunken: #131316;
-    --border: #27272a;
-    --border-strong: #3f3f46;
-    --ink: #fafafa;
-    --ink-muted: #a1a1aa;
-    --ink-faint: #71717a;
-    --accent: #10b981;
-    --accent-hover: #34d399;
-    --accent-fg: #052e1f;
-    --danger: #f43f5e;
-    --danger-fg: #1c0a10;
-    --priority-low: #a1a1aa;
-    --priority-medium: #fbbf24;
-    --priority-high: #fb7185;
-  }
+html {
+  color-scheme: dark;
 }
 
 body {

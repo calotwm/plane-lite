@@ -38,6 +38,7 @@ model User {
   teamMemberships TeamMember[]
   assignedCards   Card[]       @relation("CardAssignee")
   sessions        Session[]
+  comments        Comment[]
 }
 
 model Session {
@@ -149,6 +150,8 @@ model Card {
   cycle    Cycle?     @relation(fields: [cycleId], references: [id], onDelete: SetNull)
   assignee User?      @relation("CardAssignee", fields: [assigneeId], references: [id], onDelete: SetNull)
   labels   CardLabel[]
+  checklistItems ChecklistItem[]
+  comments       Comment[]
 
   @@index([projectId])
   @@index([listId])
@@ -202,4 +205,34 @@ model CardLabel {
 
   @@unique([cardId, labelId])
   @@index([labelId])
+}
+
+model ChecklistItem {
+  id        String   @id @default(cuid())
+  cardId    String
+  text      String
+  done      Boolean  @default(false)
+  position  Int
+  version   Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  card Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
+
+  @@index([cardId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  cardId    String
+  authorId  String
+  body      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  card   Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([cardId])
+  @@index([authorId])
 }

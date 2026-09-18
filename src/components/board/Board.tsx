@@ -23,7 +23,17 @@ import { IssueCard } from "./IssueCard";
 import { IssueDialog } from "./IssueDialog";
 import type { CardT, ListT, MemberOption } from "./types";
 
-export function Board({ projectId, boardId }: { projectId: string; boardId: string }) {
+export function Board({
+  projectId,
+  boardId,
+  currentUserId,
+  isAdmin,
+}: {
+  projectId: string;
+  boardId: string;
+  currentUserId: string;
+  isAdmin: boolean;
+}) {
   const toast = useToast();
   const [lists, setLists] = useState<ListT[] | null>(null);
   const [cardsByList, setCardsByList] = useState<Record<string, CardT[]>>({});
@@ -283,6 +293,8 @@ export function Board({ projectId, boardId }: { projectId: string; boardId: stri
           listId={dialogState.listId}
           members={members}
           card={dialogState.card}
+          currentUserId={currentUserId}
+          isAdmin={isAdmin}
           onSaved={handleSaved}
           onDeleted={handleDeleted}
         />

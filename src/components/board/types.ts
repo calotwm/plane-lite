@@ -20,3 +20,20 @@ export interface MemberOption {
   id: string;
   name: string;
 }
+
+export interface ChecklistItemT {
+  id: string;
+  cardId: string;
+  text: string;
+  done: boolean;
+  position: number;
+  version: number;
+}
+
+export interface CommentT {
+  id: string;
+  cardId: string;
+  body: string;
+  createdAt: string;
+  author: { id: string; name: string; email: string };
+}

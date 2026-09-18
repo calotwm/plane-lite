@@ -11,11 +11,13 @@ export function Dialog({
   open,
   onClose,
   title,
+  wide = false,
   children,
 }: {
   open: boolean;
   onClose: () => void;
   title: string;
+  wide?: boolean;
   children: ReactNode;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
@@ -32,7 +34,7 @@ export function Dialog({
       ref={ref}
       onClose={onClose}
       onCancel={onClose}
-      className="w-full max-w-md rounded-md border border-border bg-surface-raised p-0 text-ink shadow-xl backdrop:bg-black/40"
+      className={`w-full ${wide ? "max-w-xl" : "max-w-md"} rounded-md border border-border bg-surface-raised p-0 text-ink shadow-xl backdrop:bg-black/60`}
     >
       <div className="flex items-center justify-between border-b border-border px-4 py-3">
         <h2 className="text-sm font-semibold">{title}</h2>
@@ -40,7 +42,7 @@ export function Dialog({
           <X size={16} weight="bold" />
         </IconButton>
       </div>
-      <div className="p-4">{children}</div>
+      <div className="max-h-[80vh] overflow-y-auto p-4">{children}</div>
     </dialog>
   );
 }

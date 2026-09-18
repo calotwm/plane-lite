@@ -138,7 +138,12 @@ export default function ProjectPage({ params }: { params: Promise<{ projectId: s
           />
         </div>
       ) : activeBoardId ? (
-        <Board projectId={projectId} boardId={activeBoardId} />
+        <Board
+          projectId={projectId}
+          boardId={activeBoardId}
+          currentUserId={user.id}
+          isAdmin={user.role === "admin"}
+        />
       ) : null}
     </AppShell>
   );
