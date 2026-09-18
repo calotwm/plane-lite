@@ -45,16 +45,16 @@ Chain strategy: pending
 
 ## Phase 4: API
 
-- [ ] 4.1 Teams/membership routes + scope helper.
-- [ ] 4.2 Projects CRUD + `?archived=false` scoped listing.
-- [ ] 4.3 Project archive/restore; child writes → 409 `ARCHIVED`.
-- [ ] 4.4 Boards CRUD + archive/restore; listings hide archived boards/projects.
-- [ ] 4.5 Lists CRUD, renumber-on-move, delete → backlog.
-- [ ] 4.6 Cards CRUD + fields; append assigns fractional position.
-- [ ] 4.7 `POST /api/cards/:id/move`: atomic; `STALE_VERSION` vs `ARCHIVED`.
-- [ ] 4.8 Cycles (validity, derived status) + Labels (unique, scoped) routes.
-- [ ] 4.9 `GET /api/boards/:id/version` for polling.
-- [ ] 4.10 Tests: cascades, archive/restore, concurrent drops, distinct 409s.
+- [x] 4.1 Teams/membership routes + scope helper.
+- [x] 4.2 Projects CRUD + `?archived=false` scoped listing.
+- [x] 4.3 Project archive/restore; child writes → 409 `ARCHIVED`.
+- [x] 4.4 Boards CRUD + archive/restore; listings hide archived boards/projects.
+- [x] 4.5 Lists CRUD, renumber-on-move, delete → backlog.
+- [x] 4.6 Cards CRUD + fields; append assigns fractional position.
+- [x] 4.7 `POST /api/cards/:id/move`: atomic; `STALE_VERSION` vs `ARCHIVED`.
+- [x] 4.8 Cycles (validity, derived status) + Labels (unique, scoped) routes.
+- [x] 4.9 `GET /api/boards/:id/version` for polling.
+- [x] 4.10 Tests: cascades, archive/restore, concurrent drops, distinct 409s.
 
 ## Phase 5: UI
 
